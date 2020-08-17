@@ -1,5 +1,6 @@
 'use strict'
 const mongoose = require('mongoose');
+mongoose.set('useCreateIndex', true);
 
 const ItemSchema = mongoose.Schema({
 	name: {
@@ -15,13 +16,13 @@ const ItemSchema = mongoose.Schema({
 	available: {
 		type: Boolean, 
 		default: true,
-		index: true 
+		index: true,
+		index: true
 	},
 
 	rubric: {
 		type: mongoose.Schema.Types.ObjectId,
-		ref: 'rubric',
-		index: true 
+		ref: 'rubric'
 	},
 
 	parametrs: {

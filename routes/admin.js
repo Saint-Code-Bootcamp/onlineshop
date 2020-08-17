@@ -6,7 +6,7 @@ const admin = require('../controllers/Admin');
 
 /* GET home page. */
 router.get('/', (req, res, next) => {
-	admin.run(req, res, next)
+	admin.login(req, res, next)
 });
 
 module.exports = router;

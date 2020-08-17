@@ -1,10 +1,14 @@
 var config = require('../config')();
+const mongoose = require('mongoose');
+
+
 describe("MongoDB", function() {
 	it("запущен ли сервер", function(next) {
-		var MongoClient = require('mongodb').MongoClient;
-		MongoClient.connect('mongodb://' + config.mongo.host + ':' + config.mongo.port + '/onlineshop', { useUnifiedTopology: true }, function(err, db) {
+		mongoose.connect('mongodb://' + config.mongo.host + ':' + config.mongo.port + '/onlineshop', { 
+			useUnifiedTopology: true , 
+			useNewUrlParser: true,
+		}, function (err){
 			expect(err).toBe(null);
-			expect(db).toBeDefined();
 			next();
 		});
 	});

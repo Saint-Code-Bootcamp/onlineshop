@@ -1,11 +1,12 @@
 'use strict'
 const mongoose = require('mongoose');
+mongoose.set('useCreateIndex', true);
 
 const BasketSchema = mongoose.Schema({
 	user: {
 		type: mongoose.Schema.Types.ObjectId,
 		ref: 'user',
-		index: true 
+		index: true
 	},
 	item: {
 		type: mongoose.Schema.Types.ObjectId,

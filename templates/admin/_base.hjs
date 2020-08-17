@@ -1,0 +1,18 @@
+<!doctype html>
+<html lang="ru">
+	<head>
+		<title>Онлайн магазин - Панель администрирования</title>
+		<link rel='stylesheet' href='/css/style.css' />
+		<link rel="stylesheet" href="/css/bootstrap.min.css">
+		<script src="/js/jquery-3.5.1.slim.min.js"></script>
+		<script src="/js/popper.min.js"></script>
+		<script src="/js/bootstrap.min.js"></script>
+	</head>
+	<body>
+		<div class="container">
+			<h1>Панель администратора</h1>
+			{% block content%}
+			{% endblock %}
+		</div>
+	</body>
+</html>

@@ -3,10 +3,10 @@ const BaseController = require("./Base");
 const View = require("../views/Base");
 
 module.exports = BaseController.extend({ 
-	name: "Index",
+	name: "Admin",
 	content: null,
-	run: function(req, res, next) {
-		const v = new View(res, 'index');
-		v.render({title: 'index'});
+	login: function(req, res, next) {
+		const v = new View(res, 'admin/login');
+		v.render();
 	},
 });

@@ -1,11 +1,12 @@
 'use strict'
 const mongoose = require('mongoose');
+mongoose.set('useCreateIndex', true);
 
 const OrderSchema = mongoose.Schema({
 	user: {
 		type: mongoose.Schema.Types.ObjectId,
-		ref: 'user',
-		index: true 
+		ref: 'user' ,
+		index: true
 	},
 	item_name: String,
 	cnt: Number,
