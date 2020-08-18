@@ -10,6 +10,8 @@ const nunjucks = require('nunjucks');
 
 const indexRouter = require('./routes');
 const adminRouter = require('./routes/admin');
+const session = require('express-session');
+const MongoStore = require('connect-mongo')(session);
 
 const app = express();
 
@@ -55,6 +57,12 @@ mongoose.connect('mongodb://' + config.mongo.host + ':' + config.mongo.port + '/
 		return console.log(err);
 	}
 	console.log('MongoDB runing at mongodb://' + config.mongo.host + ':' + config.mongo.port + '/onlineshop')
+	//Запускаем обработку сессий с сохранением в БД
+	app.use(session({
+		secret: 'onlineshopsecret',
+		store: new MongoStore({ mongooseConnection: mongoose.connection })
+	}));
+	//запускаем веб-сервер
 	app.listen(config.port, ()=>{
 		console.log('Server running at http://'+config.host+ ':' +config.port+' ...');
 	})

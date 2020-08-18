@@ -3,7 +3,7 @@ module.exports = function(response, template) {
 	this.template = template;
 };
 
-var _ = require("underscore");
+const _ = require("underscore");
 module.exports.prototype = {
 	extend: function(child) {
 		return _.extend({}, this, child);

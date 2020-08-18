@@ -1,6 +1,7 @@
 'use strict'
 const mongoose = require('mongoose');
 mongoose.set('useCreateIndex', true);
+mongoose.set('autoIndex', true);
 
 const ItemSchema = mongoose.Schema({
 	name: {
