@@ -6,7 +6,7 @@ module.exports = BaseController.extend({
 	name: "Admin",
 	content: null,
 	login: function(req, res, next) {
-		const v = new View(res, 'admin/login');
+		const v = new View(res, 'admin/login.html');
 		v.render();
 	},
 });

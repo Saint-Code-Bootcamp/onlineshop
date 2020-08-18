@@ -6,6 +6,7 @@ const cookieParser = require('cookie-parser');
 const logger = require('morgan');
 const mongoose = require('mongoose');
 const config = require('./config')();
+const nunjucks = require('nunjucks');
 
 const indexRouter = require('./routes');
 const adminRouter = require('./routes/admin');
@@ -13,8 +14,13 @@ const adminRouter = require('./routes/admin');
 const app = express();
 
 // view engine setup
-app.set('views', path.join(__dirname, 'templates'));
-app.set('view engine', 'hjs');
+//app.set('views', path.join(__dirname, 'templates'));
+app.set('view engine', 'nunjucks');
+nunjucks.configure(path.join(__dirname, 'templates'), {
+	autoescape: true,
+	express: app,
+	watch: true
+});
 
 app.use(logger('dev'));
 app.use(express.json());
@@ -38,7 +44,7 @@ app.use(function(err, req, res, next) {
 
 	// render the error page
 	res.status(err.status || 500);
-	res.render('error');
+	res.render('error.html');
 });
 
 mongoose.connect('mongodb://' + config.mongo.host + ':' + config.mongo.port + '/onlineshop', { 
