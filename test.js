@@ -9,12 +9,13 @@ mongoose.connect('mongodb://' + config.mongo.host + ':' + config.mongo.port + '/
 	if (err) {return console.log(err);}
 	const User = require('./models/User');
 	var u = {
-		_id: '5f3b8c40b2ae8b2d2ade250b',
-		name: 'test1',
-		email: 'test@test.t1',
-		password: 'test1'
+		name: 'test',
+		email: 'test@test',
+		password: 'test',
+		is_admin: false
 	};
-	const res = await  User.delete(u);
+	u = await  User.getByEmail('admin@admin')
+	const res = await User.update({_id: u._id, is_admin: true});
 	console.log(res);
 
 });

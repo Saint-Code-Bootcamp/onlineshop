@@ -10,7 +10,17 @@
 	</head>
 	<body>
 		<div class="container">
-			<h1>Панель администратора</h1>
+			<div class="row">
+				<div class="col">
+					<h1>Панель администратора</h1>
+				</div>
+				<div class="col1">
+					{% if req.is_auth %}
+					<div>{{ req.session.user.email }}</div>
+					<a href="/admin/logout">Выйти</a>
+					{% endif %}
+				</div>
+			</div>			
 			
 			{% block content%}
 			{% endblock %}

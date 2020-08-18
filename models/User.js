@@ -20,7 +20,7 @@ const UserSchema = mongoose.Schema({
 		type: String,
 		default: ''
 	},
-	isAdmin: {
+	is_admin: {
 		type: Boolean, 
 		default: false
 	}
@@ -57,7 +57,7 @@ var User = _.extend(
 
 		getByEmail: function(email){
 			//email is String or {email: 'email'}
-			if (!(email instanceof String)){
+			if (!_.isString(email)){
 				email = email.email;
 			}
 			return this.findOne({email: email});
@@ -69,7 +69,7 @@ var User = _.extend(
 			.then(function (user){
 				if (user && user.password === hash(userData.password)){
 					console.log('User check OK');
-					return Promise.resolve(true);
+					return Promise.resolve(user);
 				} else {
 					return Promise.resolve(false);
 				}
@@ -78,8 +78,9 @@ var User = _.extend(
 
 		update: function(userData){
 			let data = _.clone(userData);
-			data.password = hash(userData.password);
-			return userModel.where({_id: userData._id}).update(data).exec();
+			if (userData.password)
+				data.password = hash(userData.password);
+			return userModel.where({_id: userData._id}).updateOne(data).exec();
 		},
 
 		delete: function(userData){
