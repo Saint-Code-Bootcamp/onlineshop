@@ -22,7 +22,11 @@ $ sudo npm i -g express
 $ jasmine-node ./tests
 
 ```
+Для создания администратора admin@admin:admin
+```bash
+$ node create_admin.js
 
+```
 Для запуска сайта
 
 ```bash

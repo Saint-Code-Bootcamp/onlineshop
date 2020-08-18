@@ -8,8 +8,13 @@ mongoose.connect('mongodb://' + config.mongo.host + ':' + config.mongo.port + '/
 }, async function (err){
 	if (err) {return console.log(err);}
 	const User = require('./models/User');
-	var u = await User.getByEmail({email: 'admin@admin'});
-	u = await  User.delete(u._id)
+	var u = {
+		name: 'admin',
+		email: 'admin@admin',
+		password: 'admin',
+		is_admin: true
+	};
+	u = await User.create(u)
 	console.log(u);
 
 });

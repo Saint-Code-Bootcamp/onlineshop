@@ -31,12 +31,8 @@ var User = _.extend(
 	userModel,
 	{
 		create: function(userData){
-			let u = {
-				name: userData.name,
-				email: userData.email,
-				password: hash(userData.password)
-			};
-			u = new this(u).save();
+			userData.password = hash(userData.password)
+			var u = new this(userData).save();
 			u.catch((err)=>{
 				if (err.code == 11000){
 					console.log("Dublicate user email")
