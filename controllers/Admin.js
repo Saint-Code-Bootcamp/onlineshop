@@ -7,6 +7,7 @@ module.exports = BaseController.extend({
 	name: "Admin",
 	content: null,
 	check_auth: function(req, res, next) {
+		//Middleware
 		//проверить авторизацию и если ее нет, отфутболит авторизоваться
 		if (! ( req.session.user && 
 				req.session.user.session_id == req.session.id)) return res.redirect('/admin');
@@ -23,23 +24,26 @@ module.exports = BaseController.extend({
 	},
 
 	index: function(req, res, next) {
+		//показать главную страницу админки
 		const v = new View(res, 'admin/index.html');
 		v.render({req: req});
 	},
 
 	login: function(req, res, next) {
+		//страница авторизации админки
 		const v = new View(res, 'admin/login.html');
 		v.render({req: req});
 	},
 
 	logout: function(req, res, next) {
+		//выход
 		this.do_logout(req);
 		res.redirect('/admin')
 	},
 
 	do_login: async function (req, res, next) {
-		if ( req.session.user) return res.redirect('/admin'); //повторную авторизацию не делаем
-		if ( !req.body ) return response.sendStatus(400);
+		//произвести авторизацию
+		if ( !req.body ) return response.sendStatus(400); //если нету данные в POST
 		
 		const postData = {
 			email: req.body.email,
@@ -51,6 +55,7 @@ module.exports = BaseController.extend({
 
 		if ( !user.is_admin ) return res.redirect('/admin?err=2'); //не админ
 
+		//сохраним данные пользователья в сессии
 		req.session.user = {
 			_id: user._id,
 			name: user.name,

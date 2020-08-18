@@ -12,6 +12,7 @@ module.exports = {
 	},
 
 	is_auth: function(req, res, next){
+		//Middleware
 		//проверка на аутентификацию
 		if (req.session.user && 
 			req.session.user.session_id == req.session.id){
