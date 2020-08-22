@@ -1,4 +1,5 @@
 'use strict'
+const _ = require("underscore");
 const mongoose = require('mongoose');
 mongoose.set('useCreateIndex', true);
 mongoose.set('autoIndex', true);

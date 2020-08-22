@@ -8,6 +8,7 @@ const urlencodedParser = bodyParser.urlencoded({extended: true});
 const admin = require('../controllers/Admin');
 const adminUsers = require('../controllers/Admin.Users');
 const adminRubrics = require('../controllers/Admin.Rubrics');
+const adminItems = require('../controllers/Admin.Items');
 
 //корень админки
 router.get('/', admin.is_auth, (req, res, next) => {

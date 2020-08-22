@@ -35,10 +35,7 @@ var Rubric = _.extend(
 
 		all: function(){
 			return this
-			.find()
-			.then( (objs) => {
-				return Promise.resolve(objs);
-			});
+			.find();
 		}
 	}
 );
