@@ -36,6 +36,8 @@ var Item = _.extend(
 	itemModel,
 	{
 		create: function(itemData){
+			const Rubric = require("../models/Rubric");
+			itemData.rubric = Rubric.get(itemData.rubric);
 			var u = new itemModel(itemData);
 			u = u.save();
 			return u;

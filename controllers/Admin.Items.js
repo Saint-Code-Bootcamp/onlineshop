@@ -12,6 +12,10 @@ module.exports = BaseController.extend({
 		//вывод списка 
         const v = new View(res, 'admin/items.html');
         const items = await Item.all();
+        for (var i=0; i < items.length ; i++){
+            let r = await Rubric.get(items[i].rubric);
+            if (r) items[i].rubric_name = r.name;
+        }
         v.render({
             page: 'items',
             objects: items,
@@ -36,7 +40,8 @@ module.exports = BaseController.extend({
         v.render({
             page: 'items',
             additem: true,
-            req: req
+            req: req,
+            rubrics: await Rubric.all()
         });
     },
 

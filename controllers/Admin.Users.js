@@ -67,6 +67,16 @@ module.exports = BaseController.extend({
         const user = User.update(_.extend({}, {_id: id}, req.body))
         .then((user) => {
             res.redirect('/admin/users/' + user._id);
+        })
+        .catch((err) => {
+            const v = new View(res, 'admin/user.html');
+            return v.render({
+                page: 'users',
+                object: req.body,
+                adduser: true,
+                req: req,
+                error: err.message
+            });
         });
         return user;
     },
