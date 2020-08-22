@@ -66,12 +66,24 @@ router.post('/rubrics/:id', urlencodedParser, admin.check_auth, (req, res, next)
 	adminRubrics.do_edit(req, res, next);
 });
 
-
+//Items
 router.get('/items', admin.check_auth, (req, res, next) => {
-	admin.page('items', req, res, next);
+	adminItems.list(req, res, next);
 });
-router.get('/orders', admin.check_auth, (req, res, next) => {
-	admin.page('orders', req, res, next);
+router.get('/items/add', admin.check_auth, (req, res, next) => {
+	adminItems.add(req, res, next);
+});
+router.get('/items/:id', admin.check_auth, (req, res, next) => {
+	adminItems.get(req, res, next);
+});
+router.get('/items/del/:id', admin.check_auth, (req, res, next) => {
+	adminItems.do_del(req, res, next);
+});
+router.post('/items/add', urlencodedParser, admin.check_auth, (req, res, next) => {
+	adminItems.do_add(req, res, next);
+});
+router.post('/items/:id', urlencodedParser, admin.check_auth, (req, res, next) => {
+	adminItems.do_edit(req, res, next);
 });
 
 
