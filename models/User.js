@@ -32,7 +32,8 @@ var User = _.extend(
 	{
 		create: function(userData){
 			userData.password = hash(userData.password)
-			var u = new this(userData).save();
+			var u = new userModel(userData);
+			u = u.save();
 			u.catch((err)=>{
 				if (err.code == 11000){
 					console.log("Dublicate user email")
@@ -81,8 +82,8 @@ var User = _.extend(
 
 		delete: function(userData){
 			//userData is _id Number or {_id: 'id'}
-			let id = _.isNumber(userData) ? userData : userData._id;
-			return userModel.deleteOne({_id: id});
+			let id = _.isString(userData) ? userData : userData._id;
+			return userModel.deleteOne({_id: id}).exec();
 		},
 
 		all: function(){

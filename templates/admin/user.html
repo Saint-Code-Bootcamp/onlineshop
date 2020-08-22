@@ -7,8 +7,12 @@
     {% else %}
         Редактировать пользователя
     {% endif %}
+    {% if error %}
+        <div  class="alert alert-danger" role="alert">{{error}}</div>
+    {% endif %}
+    
 </h2>
-<form>
+<form method="post">
 <div class="row">
     <div class="col-3">
         Имя:
@@ -30,7 +34,7 @@
         Обновить пароль:
     </div>
     <div class="col">
-        <input type="text" name="pawwsord" value="" class="form-control">
+        <input type="text" name="password" value="" class="form-control">
     </div>
 </div>
 <div class="row">
@@ -38,7 +42,7 @@
         Админ:
     </div>
     <div class="col">
-        <input type="checkbox" name="is_iadmin" value="1" {% if object.is_admin %}checked="1"{% endif %} class="form-check-input" >
+        <input type="checkbox" name="is_admin" value="1" {% if object.is_admin %}checked="1"{% endif %} class="form-check-input" >
     </div>
 </div>
 <div class="row">
