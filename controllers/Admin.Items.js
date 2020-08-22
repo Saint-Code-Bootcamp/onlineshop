@@ -51,7 +51,7 @@ module.exports = BaseController.extend({
         return res.redirect('/admin/items');
     },
 
-    do_add: function (req, res, next) {
+    do_add: async function (req, res, next) {
         const r = Item.create(req.body)
         .then((item) => {
             res.redirect('/admin/items/' + item._id);
@@ -70,12 +70,9 @@ module.exports = BaseController.extend({
     },
 
     
-    do_edit: function (req, res, next) {
+    do_edit: async function (req, res, next) {
         const id = req.params.id;
-        const item = Item.update(_.extend({}, {_id: id}, req.body))
-        .then((item) => {
-            res.redirect('/admin/items/' + item._id);
-        });
-        return item;
+        const item = await Item.update(_.extend({}, {_id: id}, req.body))
+        return res.redirect('/admin/items/' + id);
     },
 });

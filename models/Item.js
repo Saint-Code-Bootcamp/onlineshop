@@ -35,9 +35,9 @@ var itemModel = mongoose.model('Item', ItemSchema);
 var Item = _.extend(
 	itemModel,
 	{
-		create: function(itemData){
+		create: async function(itemData){
 			const Rubric = require("../models/Rubric");
-			itemData.rubric = Rubric.get(itemData.rubric);
+			itemData.rubric = await Rubric.get(itemData.rubric);
 			var u = new itemModel(itemData);
 			u = u.save();
 			return u;
@@ -49,8 +49,10 @@ var Item = _.extend(
 			return u;
 		},
 
-		update: function(itemData){
+		update: async function(itemData){
 			let data = _.clone(itemData);
+			const Rubric = require("../models/Rubric");
+			data.rubric = await Rubric.get(data.rubric);
 			return itemModel.where({_id: itemData._id}).updateOne(data).exec();
 		},
 
