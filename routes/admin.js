@@ -29,8 +29,20 @@ router.get('/logout', (req, res, next) => {
 router.get('/users', admin.check_auth, (req, res, next) => {
 	adminUsers.list(req, res, next);
 });
+router.get('/users/add', admin.check_auth, (req, res, next) => {
+	adminUsers.add(req, res, next);
+});
 router.get('/users/:id', admin.check_auth, (req, res, next) => {
-	adminUsers.details(req, res, next);
+	adminUsers.get(req, res, next);
+});
+router.get('/users/del/:id', admin.check_auth, (req, res, next) => {
+	adminUsers.do_del(req, res, next);
+});
+router.post('/users/add', urlencodedParser, admin.check_auth, (req, res, next) => {
+	adminUsers.do_add(req, res, next);
+});
+router.post('/users/:id', urlencodedParser, admin.check_auth, (req, res, next) => {
+	adminUsers.do_edit(req, res, next);
 });
 
 

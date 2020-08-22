@@ -17,13 +17,38 @@ module.exports = BaseController.extend({
         });
     },
     
-    details: async function(req, res, next) {
+    get: async function(req, res, next) {
         const id = req.params.id;
         const v = new View(res, 'admin/user.html');
         v.render({
             page: 'users',
             object: await User.get(id),
+            req: req,
+            showdel: true
+        });
+    },
+
+    add: async function (req, res, next) {
+        const id = req.params.id;
+        const v = new View(res, 'admin/user.html');
+        v.render({
+            page: 'users',
+            adduser: true,
             req: req
         });
+    },
+
+    do_del: function (req, res, next) {
+        const id = req.params.id;
+        //User.del
+        return res.redirect('/admin/users')
+    },
+
+    do_add: function (req, res, next) {
+
+    },
+
+    do_edit: function (req, res, next) {
+        const id = req.params.id;
     },
 });
