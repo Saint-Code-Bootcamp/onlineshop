@@ -69,34 +69,5 @@ module.exports = BaseController.extend({
 		return res.redirect('/admin');
 	},
 
-	page: function(page, req, res, next) {
-		//соберем внутренние страницы админки 
-		const v = new View(res, 'admin/index.'+page+'.html');
-		var data;
-		switch (page) {
-			case 'items': data = this.get_items();
-			case 'rubrics': data = this.get_rubrics();
-			case 'users': data = this.get_users();
-			case 'orders': data = this.get_orders();
-		}
-		v.render({
-			page: page, 
-			data: data,
-			req: req
-		});
-	},
-
-	//эти функции отдадут данные для отображения
-	get_items: function() {
-		return [];
-	},
-	get_rubrics: function() {
-		return [];
-	},
-	get_users: function() {
-		return [];
-	},
-	get_orders: function() {
-		return [];
-	}
+	
 });

@@ -83,6 +83,14 @@ var User = _.extend(
 			//userData is _id Number or {_id: 'id'}
 			let id = _.isNumber(userData) ? userData : userData._id;
 			return userModel.deleteOne({_id: id});
+		},
+
+		all: function(){
+			return this
+			.find()
+			.then( (objs) => {
+				return Promise.resolve(objs);
+			});
 		}
 	}
 );
