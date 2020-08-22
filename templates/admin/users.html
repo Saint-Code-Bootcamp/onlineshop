@@ -1,0 +1,21 @@
+{% extends "admin/index.html" %}
+
+{% block innerpage %}
+<table class="table">
+	<thead class="thead-dark">
+		<tr>
+			<th> Email 
+			<th> Name 
+			<th> Admin 
+			<th>
+	<tbody>
+	{% for user in objects %}
+		<tr>
+			<td>{{ user.email }}
+			<td>{{ user.name }}
+			<td>{{ user.is_admin }}
+			<td><a href="/admin/users/{{ user._id }}">Edit</a>
+	{% endfor %}
+</table>
+{% endblock %}
+
