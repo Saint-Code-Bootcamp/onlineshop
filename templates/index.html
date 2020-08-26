@@ -1,41 +1,20 @@
-<!doctype html>
-<html lang="ru">
-	<head>
-		<title>Онлайн магазин - главная</title>
-		<link rel='stylesheet' href='/css/style.css' />
-		<link rel="stylesheet" href="/css/bootstrap.min.css">
-		<script src="/js/jquery-3.5.1.slim.min.js"></script>
-		<script src="/js/popper.min.js"></script>
-		<script src="/js/bootstrap.min.js"></script>
-	</head>
-	<body>
-		<div class="container">
-			<div class="row">
-				<div class="col-9"></div>
-				<div class="col">
-					<a class="btn btn-primary" href="#" role="button">Корзина</a>
-					<a class="btn btn-primary" href="#" role="button" >Войти</a>
-				</div>
-				<h1>Онлайн магазин</h1>
+{% extends '_base.html' %}
+
+{% block content %}
+
+<div class="row row-cols-md-3">
+	{% for it in items %}
+	<div class="col mb-4">
+		<div class="card border-primary mb-3" style="width: 18rem;">
+			<div class="card-body">
+				<h5 class="card-title">{{it.name}}</h5>
+				<h6 class="card-subtitle mb-2 text-muted">{{it.price}}</h6>
+				<p class="card-text">{{ it.short|truncate(164) }}</p>
+				<a href="/item/{{ it._id }}" class="card-link">Подробнее</a>
 			</div>
-			<nav aria-label="breadcrumb">
-				<ol class="breadcrumb">
-					<li class="breadcrumb-item active" aria-current="page">Главная</li>
-				</ol>
-			</nav>
-			<div class="container">
-				<p>
-					<a class="btn btn-primary" data-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">
-						Настроить фильтры
-					</a>
-				</p>
-				<div class="collapse" id="collapseExample">
-					<div class="card card-body">
-						Здесь идёт настройка фильтров
-					</div>
-				</div>
-			</div>
-			<div class="jumbotron"
-		</div>
-	</body>
-</html>
+		</div>	
+	</div>	
+	{% endfor %}
+</div>
+
+{% endblock %}

@@ -6,7 +6,12 @@ const index = require('../controllers/Index');
 
 /* GET home page. */
 router.get('/', (req, res, next) => {
-	index.run(req, res, next)
+	index.index(req, res, next);
 });
-
+router.get('/item/:id', (req, res, next) => {
+	index.item(req, res, next);
+});
+router.post('/to_basket/:id', (req, res, next) => {
+	index.toBasket(req, res, next);
+});
 module.exports = router;

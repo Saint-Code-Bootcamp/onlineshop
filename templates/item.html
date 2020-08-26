@@ -1,0 +1,15 @@
+{% extends '_base.html' %}
+
+{% block content %}
+
+	<h1>{{ item.name }}</h1>
+
+	<h3>Цена: {{item.price}}</h3>
+	<p>{{item.description}}</p>
+	<div>
+		<form method="POST" act="/to_basket/{{item._id}}">			
+			<input type=submit class="btn btn-primary" value="Добавить в корзину">
+		</form>
+	</div>
+
+{% endblock %}
