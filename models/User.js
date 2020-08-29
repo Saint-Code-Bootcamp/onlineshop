@@ -60,6 +60,7 @@ var User = _.extend(
 			return this.findOne({email: email});
 		},
 
+		//проверка пользователя по имени и паролю
 		check: function (userData){
 			return this
 			.findOne({email: userData.email})

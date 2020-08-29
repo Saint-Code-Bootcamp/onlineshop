@@ -14,7 +14,7 @@ const BasketSchema = mongoose.Schema({
 	user_type: Number, //0 - неавторизированый, 1 - авторизированый
 	item: {
 		type: mongoose.Schema.Types.ObjectId,
-		ref: 'item'
+		ref: 'Item'
 	},
 	cnt: Number,
 	price: Number,
@@ -54,6 +54,15 @@ var Basket = _.extend(
 		delete: function(data){
 			let id = _.isString(data) ? data : data._id;
 			return this.deleteOne({_id: id}).exec();
+		},
+
+
+		clear: function(user_id){
+			return this
+			.deleteMany({user: String(user_id)}).exec()
+			.then( (objs) => {
+				return Promise.resolve(objs);
+			});
 		},
 
 		list: function(user_id){

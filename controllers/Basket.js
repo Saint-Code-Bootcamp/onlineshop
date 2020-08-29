@@ -9,12 +9,17 @@ const User = require("../models/User");
 module.exports = BaseController.extend({ 
 	name: "Basket",
 	content: null,
+
+	//обновить свою корзину поменяв session_id  на user_id
+	run_update: function(sess_id, user_id){
+		Basket.updateMany({user: sess_id}, {user: user_id, user_type: 1}).exec();
+	},
 	
 	//добавить в корзину
 	do_basket_add: async function (req, res, next) {
 		const id = req.params.id;
 		const item = await Item.get(id);
-		const u = req.is_auth ? req.session.user._id : req.session.session_id; 
+		const u = req.is_auth ? req.session.user._id : req.session.id; 
 		const user_type = req.is_auth ? 1 : 0; 
 
 		let basket = await Basket.find_by_item(item, u);

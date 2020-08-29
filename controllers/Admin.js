@@ -8,25 +8,20 @@ module.exports = BaseController.extend({
 	content: null,
 	check_auth: function(req, res, next) {
 		//Middleware
-		//проверить авторизацию и если ее нет, отфутболит авторизоваться
-		if (! ( req.session.user && 
-				req.session.user.session_id == req.session.id)) return res.redirect('/admin');
-
-		//авторизован, но проверим что пользователь админ. Вдруг он зашел просто на сайте и пытается пойти в админку
-		const user = User.get(req.session.user._id).then((u) => {
-			if (u.is_admin && u.session_id == req.session.id){
-				req.is_auth = true;
-				return next();
-			} else {
-				return res.redirect('/admin')
-			}
-		});		
+		return BaseController._check_auth(req, res, next, '/admin');
 	},
 
 	index: function(req, res, next) {
-		//показать главную страницу админки
+		//
+		if (!req.is_auth){
+			return res.redirect("/accound/login");
+		}
+		const user = User.get(req.session.user._id);
 		const v = new View(res, 'admin/index.html');
-		v.render({req: req});
+		v.render({
+			req: req,
+			user: user
+		});
 	},
 
 	login: function(req, res, next) {
