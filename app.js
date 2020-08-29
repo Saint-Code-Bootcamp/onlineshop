@@ -10,6 +10,9 @@ const nunjucks = require('nunjucks');
 
 const indexRouter = require('./routes');
 const adminRouter = require('./routes/admin');
+const basketRouter = require('./routes/basket');
+const accountRouter = require('./routes/account');
+
 const session = require('express-session');
 const MongoStore = require('connect-mongo')(session);
 
@@ -48,6 +51,8 @@ mongoose.connect('mongodb://' + config.mongo.host + ':' + config.mongo.port + '/
 		
 		app.use('/', indexRouter);
 		app.use('/admin', adminRouter);
+		app.use('/basket', basketRouter);
+		app.use('/account', accountRouter);
 		
 		// catch 404 and forward to error handler
 		app.use(function(req, res, next) {

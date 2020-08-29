@@ -1,7 +1,10 @@
 'use strict'
+const _ = require('underscore');
 const mongoose = require('mongoose');
 mongoose.set('useCreateIndex', true);
 mongoose.set('autoIndex', true);
+const Item = require("./Item");
+
 
 const BasketSchema = mongoose.Schema({
 	user: {
@@ -18,12 +21,11 @@ const BasketSchema = mongoose.Schema({
 	discount: {type: Number, default: 0}
 });
 
-var basketModel = mongoose.model('Item', BasketSchema);
+var basketModel = mongoose.model('Basket', BasketSchema);
 var Basket = _.extend(
 	basketModel,
 	{
 		create: async function(data){
-			const Item = require("../models/item");
 			data.item = await Item.get(data.item);
 			var u = new basketModel(data);
 			u = u.save();
@@ -36,21 +38,27 @@ var Basket = _.extend(
 			return u;
 		},
 
-		update: async function(itemData){
-			let data = _.clone(itemData);
-			const Rubric = require("../models/Rubric");
-			data.rubric = await Rubric.get(data.rubric);
-			return itemModel.where({_id: itemData._id}).updateOne(data).exec();
+		//найти запись по item
+		find_by_item: function(item, user_id){
+			return this
+			.find({user:String(user_id), item: item}).exec()
+			.then( (objs) => {
+				return Promise.resolve(objs);
+			});
 		},
 
-		delete: function(itemData){
-			let id = _.isString(itemData) ? itemData : itemData._id;
-			return itemModel.deleteOne({_id: id}).exec();
+		update: async function(data){
+			return this.where({_id: data._id}).updateOne(data).exec();
+		},
+
+		delete: function(data){
+			let id = _.isString(data) ? data : data._id;
+			return this.deleteOne({_id: id}).exec();
 		},
 
 		list: function(user_id){
 			return this
-			.find(user = user_id)
+			.find({user: String(user_id)}).exec()
 			.then( (objs) => {
 				return Promise.resolve(objs);
 			});
