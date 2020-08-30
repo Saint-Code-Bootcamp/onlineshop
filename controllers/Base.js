@@ -1,16 +1,20 @@
 'use strict'
+// Базовый контроллер. От него наследуются остальеные
 const User = require("../models/User");
-const _ = require("underscore");
+const _ = require("underscore"); //мощная библиотека JS https://underscorejs.org/
 module.exports = {
 	name: "base",
 
+	//расширяет функционал базового контроллера. Создает новый контроллер который включает в себя свойства и методы базового и расширения
 	extend: function(child) {
 		return _.extend({}, this, child);
 	},
 
+	//Middleware
+	//проверить авторизацию и если ее нет, выполнит рудирект на ret
+	// пользователь считается авторизированным если у него в сессии есть объект user 
+	// и у него req.session.user.session_id == req.session.id
 	_check_auth: function(req, res, next, ret) {
-		//Middleware
-		//проверить авторизацию и если ее нет, отфутболит авторизоваться
 		if (! ( req.session.user && 
 				req.session.user.session_id == req.session.id)) return res.redirect(ret);
 
@@ -25,9 +29,10 @@ module.exports = {
 		});		
 	},
 
+	//Middleware 
+	//проверка на аутентификацию
+	//добавляет в объект запроса is_auth:Boolean
 	is_auth: function(req, res, next){
-		//Middleware
-		//проверка на аутентификацию
 		if (req.session.user && 
 			req.session.user.session_id == req.session.id){
 			req.is_auth = true;
@@ -37,8 +42,8 @@ module.exports = {
 		return next();
 	},
 
-	do_logout: function(req){
-		//уничтожить сессию
+	//уничтожить сессию пользователя
+	do_logout: function(req){		
 		if (req.session.user) {
 			delete req.session.user;
 			req.session.save();

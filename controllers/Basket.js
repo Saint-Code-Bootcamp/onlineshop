@@ -10,7 +10,12 @@ module.exports = BaseController.extend({
 	name: "Basket",
 	content: null,
 
-	//обновить свою корзину поменяв session_id  на user_id
+	//Обновить свою корзину поменяв session_id  на user_id.
+	//--
+	//неавторизваный пользователь хранит покупке в корзине по своему идентификатору сессии, 
+	//а авторизованый по идентификатору пользователя
+	//если пользователь сначал сделал покупки в корзину а потом авторизовался, 
+	//чтобы сохранить за ним его покупки запускается эта функция
 	run_update: function(sess_id, user_id){
 		Basket.updateMany({user: sess_id}, {user: user_id, user_type: 1}).exec();
 	},

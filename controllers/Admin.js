@@ -6,49 +6,49 @@ const User = require("../models/User");
 module.exports = BaseController.extend({ 
 	name: "Admin",
 	content: null,
-	check_auth: function(req, res, next) {
-		//Middleware
+	//Middleware
+	check_auth: function(req, res, next) {		
+		//вызов _check_auth  базового контроллера с указанием страницы для редиректа 
 		return BaseController._check_auth(req, res, next, '/admin');
 	},
 
+	//GET - главная страница
 	index: function(req, res, next) {
-		//
 		if (!req.is_auth){
-			return res.redirect("/accound/login");
+			return res.redirect("/admin/login");
 		}
 		const user = User.get(req.session.user._id);
 		const v = new View(res, 'admin/index.html');
 		v.render({
-			req: req,
+			req: req, 
 			user: user
 		});
 	},
 
-	login: function(req, res, next) {
-		//страница авторизации админки
+	//GET - страница авторизации админки
+	login: function(req, res, next) {		
 		const v = new View(res, 'admin/login.html');
-		v.render({req: req});
+		v.render({req: req}); //если была ошибка авторизации то в запросе будет передано err=X
 	},
 
+	//GET - страница выхода из админки
 	logout: function(req, res, next) {
 		//выход
 		this.do_logout(req);
 		res.redirect('/admin')
 	},
 
+	//POST - произвести авторизацию
 	do_login: async function (req, res, next) {
-		//произвести авторизацию
 		if ( !req.body ) return res.sendStatus(400); //если нету данные в POST
 		
-		const postData = {
+		const user = await User.check({
 			email: req.body.email,
 			password: req.body.password
-		};
+		});
+		if ( !user ) return res.redirect('/admin/login?err=1'); //нет совпадения емайл+пароль
 
-		const user = await User.check(postData);
-		if ( !user ) return res.redirect('/admin?err=1'); //нет совпадения емайл+пароль
-
-		if ( !user.is_admin ) return res.redirect('/admin?err=2'); //не админ
+		if ( !user.is_admin ) return res.redirect('/admin/login?err=2'); //пользователь не админ
 
 		//сохраним данные пользователья в сессии
 		req.session.user = {
