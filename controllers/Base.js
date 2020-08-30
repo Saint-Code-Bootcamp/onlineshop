@@ -18,7 +18,6 @@ module.exports = {
 		if (! ( req.session.user && 
 				req.session.user.session_id == req.session.id)) return res.redirect(ret);
 
-		//авторизован, но проверим что пользователь админ. Вдруг он зашел просто на сайте и пытается пойти в админку
 		const user = User.get(req.session.user._id).then((u) => {
 			if (u.session_id == req.session.id){
 				req.is_auth = true;

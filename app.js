@@ -46,7 +46,10 @@ mongoose.connect('mongodb://' + config.mongo.host + ':' + config.mongo.port + '/
 		
 		//вкличим журнал запросов
 		app.use(logger('dev')); 
-		//указываем в какой дирректории лижит статика. 
+		//app.use(express.json());
+		//app.use(express.urlencoded({ extended: false }));
+		
+		//указываем в какой дирректории лежит статика. 
 		//Express на все запросы к файлам в этой дирректориии будет отвечить как файл-сервер - просто отдаст статический файл
 		app.use(express.static(path.join(__dirname, 'public'))); 
 		//включаем обработчик cookies
@@ -64,6 +67,7 @@ mongoose.connect('mongodb://' + config.mongo.host + ':' + config.mongo.port + '/
 		
 		//устанавливаем ассоциацию между начальной строкой запроса и роутером
 		//внутри роутера мы указываем относительный путь
+		//роутер обрабатывает запросы и передает их контроллерам
 		app.use('/', indexRouter);
 		app.use('/admin', adminRouter);
 		app.use('/basket', basketRouter);

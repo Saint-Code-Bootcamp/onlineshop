@@ -88,6 +88,7 @@ module.exports = BaseController.extend({
     },
     
 	get: async function(req, res, next) {
+        //TODO задание - добавить проверку если заказа не существует
         const id = req.params.id;
         const order = await Order.get(id);
         let v;

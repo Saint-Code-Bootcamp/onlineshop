@@ -9,13 +9,15 @@ module.exports = BaseController.extend({
 	//Middleware
 	check_auth: function(req, res, next) {		
 		//вызов _check_auth  базового контроллера с указанием страницы для редиректа 
+		//TODO
+		//авторизован, но проверим что пользователь админ. Вдруг он зашел просто на сайте и пытается пойти в админку
 		return BaseController._check_auth(req, res, next, '/admin');
 	},
 
 	//GET - главная страница
 	index: function(req, res, next) {
 		if (!req.is_auth){
-			return res.redirect("/admin/login");
+			return res.redirect("/admin?err=1");
 		}
 		const user = User.get(req.session.user._id);
 		const v = new View(res, 'admin/index.html');
@@ -46,9 +48,9 @@ module.exports = BaseController.extend({
 			email: req.body.email,
 			password: req.body.password
 		});
-		if ( !user ) return res.redirect('/admin/login?err=1'); //нет совпадения емайл+пароль
+		if ( !user ) return res.redirect('/admin?err=1'); //нет совпадения емайл+пароль
 
-		if ( !user.is_admin ) return res.redirect('/admin/login?err=2'); //пользователь не админ
+		if ( !user.is_admin ) return res.redirect('/admin?err=2'); //пользователь не админ
 
 		//сохраним данные пользователья в сессии
 		req.session.user = {

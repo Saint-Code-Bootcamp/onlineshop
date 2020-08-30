@@ -23,7 +23,6 @@ module.exports = {
 	},
 
 	delete: function(data){
-		//userData is _id Number or {_id: 'id'}
 		let id = _.isNumber(data) ? data : data._id;
 		return Model.deleteOne({_id: id});
 	}
