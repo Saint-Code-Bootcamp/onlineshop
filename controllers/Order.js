@@ -34,7 +34,7 @@ module.exports = BaseController.extend({
         });
 	},
 
-	do_confirm: async function(req, res, next) {
+	do: async function(req, res, next) {
         const objects = await Basket.list(req.session.user._id);
         const user = await User.get(req.session.user._id);
         let items = [];
@@ -59,10 +59,22 @@ module.exports = BaseController.extend({
             sum: sum
         });
 
-        await Basket.clear(user._id);
+        await Basket.clear(user._id); //почистим корзину
 		
         res.redirect('/order/' + order._id);
-	},
+    },
+    
+    do_address: async function(req, res, next) {
+        const id = req.params.id;
+        const order = await Order.get(id);
+        const address = req.body.address;
+        Order.update({
+            _id: id,
+            address: address,
+            status: 1
+        });
+        res.redirect('/order/' + order._id);
+    },
 
 	list: async function(req, res, next) {
         const user = await User.get(req.session.user._id);
@@ -77,8 +89,19 @@ module.exports = BaseController.extend({
     
 	get: async function(req, res, next) {
         const id = req.params.id;
-		const v = new View(res, 'order.html');
-		const order = await Order.get(id);
+        const order = await Order.get(id);
+        let v;
+        switch (order.status){
+            case 0:
+                v = new View(res, 'order.html');
+                break;
+            case 1:
+                v = new View(res, 'order_pay.html');
+                break;
+            default:
+                v = new View(res, 'order_ok.html');
+        }
+        
 		
         v.render({
             order: order,

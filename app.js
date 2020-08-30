@@ -13,6 +13,7 @@ const adminRouter = require('./routes/admin');
 const basketRouter = require('./routes/basket');
 const accountRouter = require('./routes/account');
 const orderRouter = require('./routes/order');
+const yandexRouter = require('./routes/yandex');
 
 const session = require('express-session');
 const MongoStore = require('connect-mongo')(session);
@@ -55,6 +56,7 @@ mongoose.connect('mongodb://' + config.mongo.host + ':' + config.mongo.port + '/
 		app.use('/basket', basketRouter);
 		app.use('/account', accountRouter);
 		app.use('/order', orderRouter);
+		app.use('/yandex', yandexRouter);
 		
 		// catch 404 and forward to error handler
 		app.use(function(req, res, next) {

@@ -8,6 +8,7 @@ const urlencodedParser = bodyParser.urlencoded({extended: true});
 const admin = require('../controllers/Admin');
 const adminUsers = require('../controllers/Admin.Users');
 const adminRubrics = require('../controllers/Admin.Rubrics');
+const adminOrders = require('../controllers/Admin.Orders');
 const adminItems = require('../controllers/Admin.Items');
 
 //корень админки
@@ -74,17 +75,31 @@ router.get('/items', admin.check_auth, (req, res, next) => {
 router.get('/items/add', admin.check_auth, (req, res, next) => {
 	adminItems.add(req, res, next);
 });
-router.get('/items/:id', admin.check_auth, (req, res, next) => {
-	adminItems.get(req, res, next);
-});
 router.get('/items/del/:id', admin.check_auth, (req, res, next) => {
 	adminItems.do_del(req, res, next);
+});
+router.get('/items/:id', admin.check_auth, (req, res, next) => {
+	adminItems.get(req, res, next);
 });
 router.post('/items/add', urlencodedParser, admin.check_auth, (req, res, next) => {
 	adminItems.do_add(req, res, next);
 });
 router.post('/items/:id', urlencodedParser, admin.check_auth, (req, res, next) => {
 	adminItems.do_edit(req, res, next);
+});
+
+//Orders
+router.get('/orders', admin.check_auth, (req, res, next) => {
+	adminOrders.list(req, res, next);
+});
+router.get('/orders/del/:id', admin.check_auth, (req, res, next) => {
+	adminOrders.do_del(req, res, next);
+});
+router.get('/orders/:id', admin.check_auth, (req, res, next) => {
+	adminOrders.get(req, res, next);
+});
+router.post('/orders/:id', urlencodedParser, admin.check_auth, (req, res, next) => {
+	adminOrders.do_edit(req, res, next);
 });
 
 

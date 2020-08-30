@@ -1,6 +1,7 @@
 'use strict'
 const _ = require('underscore');
 const mongoose = require('mongoose');
+const User = require('./User');
 mongoose.set('useCreateIndex', true);
 mongoose.set('autoIndex', true);
 
@@ -15,7 +16,7 @@ const OrderSchema = mongoose.Schema({
 		type: String,
 		default: ''
 	},
-	status: {
+	status: { //'0': "Подтверждение...", '1': "Ожидает оплаты", '2': "Ожидает отправки", , '3': "Отправлен"
 		type: Number,
 		default: 0
 	},
@@ -56,6 +57,18 @@ var Order = _.extend(
 		delete: function(data){
 			let id = _.isString(data) ? data : data._id;
 			return this.deleteOne({_id: id}).exec();
+		},
+
+		all: function(user){
+			return this
+			.find()
+			.then( async (objs) => {
+				for (let i = 0; i < objs.length; i++) {
+					const u = await User.get(objs[i].user);
+					objs[i].username = u.name;
+				}
+				return Promise.resolve(objs);
+			});
 		},
 
 		list: function(user){

@@ -38,7 +38,7 @@ module.exports = BaseController.extend({
 
 	do_login: async function (req, res, next) {
 		//произвести авторизацию
-		if ( !req.body ) return response.sendStatus(400); //если нету данные в POST
+		if ( !req.body ) return res.sendStatus(400); //если нету данные в POST
 		
 		const postData = {
 			email: req.body.email,

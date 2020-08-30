@@ -8,8 +8,9 @@
 		<li class="breadcrumb-item active" aria-current="page">Детали заказа</li>
 	</ol>
 </nav>
-	<h1>Ваш заказ подтверждён</h1>
-	<p>Заказ зарезервирован. Оплатите его в течении 3 дней</p>
+	<h1>Ваш заказ</h1>
+	{% set stat = {'0': "Подтверждение...", '1': "Ожидает оплаты", '2': "Ожидает отправки", '3': "Отправлен"} %}
+	<p>Текущий статус: {{ stat[order.status|string] }}</p>
 	<table class="table">
 		<thead class="thead-dark">
 			<tr>
@@ -32,13 +33,6 @@
 		<div class="col">{{ order.sum }}</div>
 	</div>	
 
-	<p>Введите данные для отправки заказа</p>
-	<form method="POST" action="/order/address/{{order._id}}">
-		<div class="form-group">
-			<label for="address">address </label>
-			<input type="text" name="address" class="form-control" id="address">
-		</div>
-		<button type="submit" class="btn btn-primary">Перейти к оплате</button>
-	</form>
+
 
 {% endblock %}
