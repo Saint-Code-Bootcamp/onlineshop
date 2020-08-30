@@ -47,7 +47,7 @@ var User = _.extend(
 		get: function(id){
 			const u = this.findById(id);
 			u.catch((e) => {
-				throw("Id error");
+				throw("User Id error");
 			});
 			return u;
 		},

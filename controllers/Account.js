@@ -94,16 +94,18 @@ module.exports = BaseController.extend({
         //Создадим нового пользователя используя модель User
         user = await User.create(postData);
         //авторизируем пользователя
-        this.run_login(req, user);
+        await this.run_login(req, user);
         
         //Скажем корзине выполнить обновление. 
         //Это необходимо чтобы корзина изменила свои заказы с учетом авторизации пользователя
-        Basket.run_update(req.session.id, String(user._id));
+        await Basket.run_update(req.session.id, String(user._id));
         
          //если установлена переменная возврата ret  выполнить редирект по ней
          //т.е. страницу регистрации можно выполнить с указанием куда вернуться после регистрации
-        if (req.query.ret && req.query.ret != '') 
-            return res.redirect(req.query.ret);
+        if (req.query.ret && req.query.ret != '') {
+            res.redirect(req.query.ret);
+            return;
+        }            
         
         //по умолчанию выполнить редирект на ЛК
         res.redirect('/account');
@@ -138,7 +140,7 @@ module.exports = BaseController.extend({
 
         //Скажем корзине выполнить обновление. 
         //Это необходимо чтобы корзина изменила свои заказы с учетом авторизации пользователя
-        Basket.run_update(req.session.id, String(user._id));
+        await Basket.run_update(req.session.id, String(user._id));
         
         //редирект на страницу ЛК
         return res.redirect('/account');

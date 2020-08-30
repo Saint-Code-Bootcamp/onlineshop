@@ -45,7 +45,7 @@ var Order = _.extend(
 
 		get: function(id){
 			const u = this.findById(id);
-			u.catch((e) => { throw("Item Id error"); });
+			u.catch((e) => { throw("Order Id error"); });
 			return u;
 		},
 

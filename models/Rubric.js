@@ -19,7 +19,7 @@ var Rubric = _.extend(
 
 		get: function(id){
 			const u = this.findById(id);
-			u.catch((e) => { throw("Id error"); });
+			u.catch((e) => { throw("Rubric error"); });
 			return u;
 		},
 

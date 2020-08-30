@@ -17,7 +17,7 @@ module.exports = BaseController.extend({
 	},
 
 	step1: async function(req, res, next) {
-		if (!req.is_auth) return res.redirect('/account/register?ret=/order/step1');
+		if (!req.is_auth) return res.redirect('/account/register?ret=/order/confirm');
 		const v = new View(res, 'order_confirm.html');
         const objects = await Basket.list(req.session.user._id);
         let sum = 0;
@@ -48,7 +48,7 @@ module.exports = BaseController.extend({
                 item_name: it_name,
                 cnt: objects[i].cnt,
                 price: objects[i].price,
-                discount: objects[i].discont,
+                discount: objects[i].discount,
             });
             sum += objects[i].price * objects[i].cnt;
         }

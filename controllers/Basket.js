@@ -16,8 +16,8 @@ module.exports = BaseController.extend({
 	//а авторизованый по идентификатору пользователя
 	//если пользователь сначал сделал покупки в корзину а потом авторизовался, 
 	//чтобы сохранить за ним его покупки запускается эта функция
-	run_update: function(sess_id, user_id){
-		Basket.updateMany({user: sess_id}, {user: user_id, user_type: 1}).exec();
+	run_update: async function(sess_id, user_id){
+		await Basket.updateMany({user: sess_id}, {user: user_id, user_type: 1}).exec();
 	},
 	
 	//добавить в корзину
