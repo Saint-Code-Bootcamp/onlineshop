@@ -4,7 +4,7 @@ const BaseController = require("./Base");
 const View = require("../views/Base");
 const User = require("../models/User");
 
-module.exports = BaseController.extend({ 
+module.exports = BaseController.extend({
 	name: "AdminUsers",
 	content: null,
 	list: async function(req, res, next) {

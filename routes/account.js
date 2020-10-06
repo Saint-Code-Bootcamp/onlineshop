@@ -7,7 +7,10 @@ const urlencodedParser = bodyParser.urlencoded({extended: true});
 
 const account = require('../controllers/Account');
 
-/* GET home page. */
+//отбрасываем часть usrl которая привела нас в этот роутер, а именно /account
+//анализируем дальнейшую часть url  и передаем управление подходящему контроллеру
+
+
 router.get('/', account.is_auth, (req, res, next) => {
 	account.index(req, res, next);
 });

@@ -92,6 +92,7 @@ module.exports = BaseController.extend({
         const id = req.params.id;
         const order = await Order.get(id);
         let v;
+        //в зависимости от статуса заказа
         switch (order.status){
             case 0:
                 v = new View(res, 'order.html');
